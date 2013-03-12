@@ -78,12 +78,12 @@ namespace RogueCoder.Models
 
     public class LightCAO : ComputerAccessibleObject
     {
-        private bool state;
-
+        public bool state;
 
         public LightCAO()
         {
             name = "light";
+            state = true;
         }
 
         public override string GetDescription()

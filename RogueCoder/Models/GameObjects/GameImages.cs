@@ -7,8 +7,8 @@ namespace RogueCoder.Models.GameObjects
 {
     public class GameImages
     {
-        //public static readonly string ServerLoc = ""; //local
-        public static readonly string ServerLoc = "/roguecoder";  //server
+        public static readonly string ServerLoc = ""; //local
+        //public static readonly string ServerLoc = "/roguecoder";  //server
 
         public static readonly string BlueTile = ServerLoc + "/Content/Images/BlueTile.png";
         public static readonly string BrownTile = ServerLoc + "/Content/Images/BrownTile.png";

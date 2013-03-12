@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About" xml:space="preserve">
+    <value>put stuff here</value>
+  </data>
   <data name="GameLooseText" xml:space="preserve">
     <value>You have been re-captured the. You spend the rest of your life in prison. You never type another line of code again.</value>
+  </data>
+  <data name="GameTitleText" xml:space="preserve">
+    <value>RogueCoder - Saving private Hanselman</value>
   </data>
   <data name="GameWinText" xml:space="preserve">
     <value>Congratulations you have escaped.Victory is yours!!!</value>
@@ -127,6 +133,6 @@
     <value>Movement keys are [W,Z,S,A] - click on any object or item to get its description. You need to get to the 5th level  of the prison ...</value>
   </data>
   <data name="IntroGameText" xml:space="preserve">
-    <value>The year is 2015 and with the election of a number of ultra-conservative governments - programming has been declared illegal and all programmers have been jailed. You are the last hope for the programmers, The last free developer...</value>
+    <value>The year is 2015 and with the election of a number of ultra-conservative governments - programming has been declared illegal and all programmers have been jailed. You are the last hope for the programmers, The last free developer, but instead of staying out of jail you busting in to one of the toughest high security prison to rescue the great programmer Scott Hanselman - yes thats right Scott Hanselman as in Hanselman.com, Hanselminutes.com, thislife.com and many more .com's. Are you up to the job or is society doomed never to write another line of code again</value>
   </data>
 </root>

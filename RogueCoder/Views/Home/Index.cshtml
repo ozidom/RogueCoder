@@ -47,6 +47,14 @@
         <input type="button" value="Close" onclick="$('#HowToPlayDiv').hide(1000);" />
     </div> 
 </div>
+<div id="AboutDiv" class="HowToPlayDiv">
+    <div>
+        @RogueCoder.GameResource.About
+    </div>
+    <div style="position:absolute;vertical-align:bottom">
+        <input type="button" value="Close" onclick="$('#AboutDiv').hide(1000);" />
+    </div> 
+</div>
 <div id="DiceDiv" class="DiceDiv">
     <input id="Laptop" type="button" value="Laptop"/>"
 </div>
@@ -54,8 +62,8 @@
 </div>
 <div id="ComputerScreenContainerDiv" class="ComputerScreenContainerDiv"  >
     <textarea id="ComputerScreenDiv" class="ComputerScreenDiv" >
-    1 connect light 123;
-    2 execute light off;
+connect light 123;
+execute light off;
     </textarea>xs
 
     <input type="button" name="btnClose" value="x"  id="btnClose" class="btnClose" onclick="$('#ComputerScreenContainerDiv').hide();"/>
@@ -69,6 +77,7 @@
 </div>
 <div id ="menu" class="menu"  >
       <input type="button" value="?" onclick="$('#HowToPlayDiv').show(1000);" />
+     <input type="button" value="About" onclick="$('#AboutDiv').show(1000);" />
 </div>
 <div id ="debug" class="debug"  >
      
@@ -173,7 +182,9 @@
             drawScreen();
         };
 
-        var processRunCode = function () {
+        var processRunCode = function (data) {
+            gameData = data.Level;
+            gameLevelData = data;
             $('#serverprocessingdisplay').hide(1000);
             IsServerProcessing = false;
             $('#ComputerScreenContainerDiv').hide();

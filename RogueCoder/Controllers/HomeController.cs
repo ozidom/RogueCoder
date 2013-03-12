@@ -55,7 +55,12 @@ namespace RogueCoder.Controllers
             string[] compileErrors = new string[10];
             List<string> runTimeErrors = new List<string>();
             List<ComputerAccessibleObject> newCaos = game.caos;
-            //computer.Run(compiler.Compile(codeLines, out compileErrors), ref newCaos, out runTimeErrors);
+            Dictionary<int, string> compiledCode = compiler.Compile(codeLines, out compileErrors);
+            computer.Run(compiledCode, ref newCaos, out runTimeErrors);
+
+            //Process new Caos
+            LightCAO lights = newCaos.Cast<LightCAO>().FirstOrDefault(c => c.name == "light");
+            game.Lights = lights.state;
             game.caos = newCaos;
 
             SetGame(game);

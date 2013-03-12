@@ -45,15 +45,15 @@ namespace RogueCoder.Models
 
 
             int lineNumber = 0;
-            while (lineNumber++ < program.Count)
+            while (lineNumber< program.Count)
             {
                 var li = program.FirstOrDefault(k => k.Key == lineNumber);
-                if (!li.Equals(null))
+                if (!li.Equals(null) && !String.IsNullOrWhiteSpace(li.Value))
                 {
                     string[] lineCommands = li.Value.Split(' ');
                     lineNumber = li.Key;
-                    string command = lineCommands[1].ToUpper();
-                    List<string> parameters = lineCommands.Skip(2).ToList();
+                    string command = lineCommands[0].ToUpper();
+                    List<string> parameters = lineCommands.Skip(1).ToList();
                     string error;
                     output.Append(ProcessCommand(ref lineNumber, command, parameters,ref gameObjects,out error));
                     if (error != string.Empty)
@@ -63,6 +63,8 @@ namespace RogueCoder.Models
                 {
                     errors.Add("Error line number can not be null");
                 }
+
+                lineNumber++;
             }
            
             return output.ToString();

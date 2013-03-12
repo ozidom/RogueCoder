@@ -95,5 +95,13 @@ namespace RogueCoder {
                 return ResourceManager.GetString("IntroGameText", resourceCulture);
             }
         }
+
+        public static string About
+        {
+            get
+            {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
     }
 }

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace RogueCoder.Controllers
 {
+
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -58,13 +59,26 @@ namespace RogueCoder.Controllers
             Dictionary<int, string> compiledCode = compiler.Compile(codeLines, out compileErrors);
             computer.Run(compiledCode, ref newCaos, out runTimeErrors);
 
-            //Process new Caos
+            //Process Lights
             LightCAO lights = newCaos.Cast<LightCAO>().FirstOrDefault(c => c.name == "light");
             game.Lights = lights.state;
+           
+            //Process Doors
+            game.Doors = new bool[10];
+
+            //Process Elevator
+            game.Elevator = false;
+
+            //Process auto Guns if applicable
+            //game.AutoGun = false;
+
+            //Process Message
+            //game.message = "";
+            
             game.caos = newCaos;
 
             SetGame(game);
-            //game.LevelArray = game.Level.ToArray();
+            
             return Json(game);
         }
 

@@ -26,6 +26,13 @@ namespace RogueCoder.Models
 
         public void GetNewLevel()
         {
+            //todo rue 3
+            //workout the level challenge
+            //1. doors no password weapon keyboard - simple connect code
+            //2. doors password weapon mouse  - detect pwd code
+            //3. hidden guards - detect pwd connect lights and turn off
+            //4. guns - detect pwd connect guns and shoot guards
+            //5. hidden guards - diconnect trap - need to detect messages hero will disconnect door 
             level++;
             Level = new List<Tile>();
             Lights = true;
@@ -38,11 +45,22 @@ namespace RogueCoder.Models
 
             //Now add the creatures
             LoadCreaturesForLevel(level);
+            
+            //Load Prisoners
+            LoadHighSecurityPrisonersForLevel(level);
+
+            //Load Prisoners
+            LoadPrisonersForLevel(level);
 
             LoadWallsForLevel();
 
+            //LoadCellsForLevel();
+
+            //todo tue 2
+            //putprisoners in cell
+
             //Add the code tile
-            Level.Add(new Tile { row = 0, col = 0, canMove = false, visible = false, Description = "Code" });
+            //Level.Add(new Tile { row = 0, col = 0, canMove = false, visible = false, Description = "Code" });
 
             //Add the CAOs
             caos = new List<ComputerAccessibleObject>();
@@ -63,10 +81,27 @@ namespace RogueCoder.Models
                 Level.Add(new Tile { row = i, col = 0, FileName = GameImages.BlueTile, Description = "Wall", canMove = false, ID = i, visible = true });
                 Level.Add(new Tile { row = i, col = 380, FileName = GameImages.BlueTile, Description = "Wall", canMove = false, ID = i, visible = true });
             }
+/*
+            for (int i = 0; i < 400; i += 40)
+                Level.Add(new Tile { row = 440, col = i, FileName = GameImages.BlueTile, Description = "Wall", canMove = false, ID = i, visible = true });
+            for (int i = 0; i < 400; i += 40)
+                Level.Add(new Tile { row = 460, col = i, FileName = GameImages.BlueTile, Description = "Wall", canMove = false, ID = i, visible = true });
+           
+*/
+            
+                //Level.Add(new Tile { row = 440, col = i, FileName = GameImages.BlueTile, Description = "Door", canMove = false, ID = i, visible = true, HasLaptop=false,blocked=false,directionImage=null });
+           
 
             //bottomwall
             for (int i = 0; i < 400; i += 20)
                 Level.Add(new Tile { row = 480, col = i, FileName = GameImages.BlueTile, Description = "Wall", canMove = false, ID = i, visible = true });
+               
+            //ad below
+            //int doorCount = 1;
+            //for (int i = 20; i < 360; i += 40)
+            //    Level.Add(new Tile { row = 460, col = i, FileName = GameImages.BlueTile, Description = "Wall", canMove = false, ID = i, visible = true });
+           
+            
         }
 
         private void LoadCreaturesForLevel(int levelNumber)
@@ -77,10 +112,6 @@ namespace RogueCoder.Models
                 case 1:
                     Level.Add(CreatureFactory.CreateCreature(0, GameEnums.CreatureType.guardlevel1, 200,250,4,3).GetTile());
                     Level.Add(CreatureFactory.CreateCreature(0, GameEnums.CreatureType.guardlevel1, 130, 270, 4, 3).GetTile());
-                    string[] co = new string[2];
-                    co[0] = "hi";
-                    co[1] = "bi";
-                    Level.Add(new Creature(999,"Programmer X",GameImages.Prisoner,200,200,2,2,false,co).GetTile());
                     break;
                 case 2:
                     Level.Add(CreatureFactory.CreateCreature(0, GameEnums.CreatureType.guardlevel2, 180, 160, 4,4).GetTile());
@@ -122,6 +153,62 @@ namespace RogueCoder.Models
 
         }
 
+        private void LoadPrisonersForLevel(int levelNumber)
+        {
+            Random r = new Random();
+            switch (levelNumber)
+            {
+                case 1:
+                    string[] co = new string[2];
+                    co[0] = "hi";
+                    co[1] = "bi";
+                    Level.Add(new Creature(999, "Programmer X", GameImages.Prisoner, 200, 200, 2, 2, false, co).GetTile());
+                    break;
+                case 2:
+                     
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+                   
+                    break;
+                case 5:
+                   
+                    break;
+
+            }
+
+        }
+
+        private void LoadHighSecurityPrisonersForLevel(int levelNumber)
+        {
+            Random r = new Random();
+            switch (levelNumber)
+            {
+                case 1:
+                    string[] co = new string[2];
+                    co[0] = "I am in prison";
+                    co[1] = "bi";
+                    Level.Add(new Creature(999, "Programmer Y(High Security Prisoner)", GameImages.Prisoner, 20, 460, 2, 2, false, co).GetTile());
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+
+                    break;
+                case 5:
+
+                    break;
+
+            }
+
+        }
+
         private void LoadItemsForLevel()
         {
           
@@ -153,8 +240,14 @@ namespace RogueCoder.Models
                     break;
             }
 
-            Level.Add(new laptop { Description = "LAPTOP", ID = 1, X = 350, Y = 350 }.GetTile());
+            //place the elevator
+           Level.Add(new Tile { row = 420, col = 340, FileName = GameImages.Elevator, Description = "Elevator", canMove = false, ID = 0, visible = true });
+     
         }
 
+
+        public bool Elevator { get; set; }
+
+        public bool[] Doors { get; set; }
     }
 }

@@ -180,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\BlueTile.png" />
+    <Content Include="Content\Images\BlueTileWithDoor.png" />
     <Content Include="Content\Images\BrownMan.png" />
     <Content Include="Content\Images\BrownTile.png" />
     <Content Include="Content\Images\D10.png" />
@@ -187,6 +188,7 @@
     <Content Include="Content\Images\D20.png" />
     <Content Include="Content\Images\D6.png" />
     <Content Include="Content\Images\D8.png" />
+    <Content Include="Content\Images\elevator.png" />
     <Content Include="Content\Images\GameIcon.png" />
     <Content Include="Content\Images\Prisoner.png" />
     <Content Include="Content\Images\GreyTile.png" />

@@ -152,8 +152,6 @@ execute light off;
                     images.push(image);
                 }
             }
-
-            
         };
 
         var runCode = function () {
@@ -172,7 +170,6 @@ execute light off;
             callServer(null, '@Url.Action("ProcessEndGame","Home")', processEndGame, null)
         };
 
-        //SYNC PROCESS SERVER RESPONSE METHOD
         var processSyncData = function (data) {
             gameData = data.Level;
             gameLevelData = data;
@@ -181,6 +178,12 @@ execute light off;
             IsServerProcessing = false;
             drawScreen();
         };
+
+        var processPing = function () {
+
+            $('#serverprocessingdisplay').hide(1000);
+            $('#GameDiv').text("Ping ok");
+        }
 
         var processRunCode = function (data) {
             gameData = data.Level;
@@ -258,7 +261,7 @@ execute light off;
                     if (playerSpaceShip.col - playerMoveDistance >= 0 )
                     {
                         var newCol = gameData[0].col - playerMoveDistance;
-                        if (!intersectWithCreatures(newCol, gameData[0].row,0))
+                        if (!CanMove(newCol, gameData[0].row,0))
                             gameData[0].col -= playerMoveDistance;
                             checkForLaptop();
                     }
@@ -266,7 +269,7 @@ execute light off;
                 case 87://n
                     if (playerSpaceShip.row - playerMoveDistance >= 0) {
                         var newRow = gameData[0].row - playerMoveDistance;
-                        if (!intersectWithCreatures(gameData[0].col, newRow,0))
+                        if (!CanMove(gameData[0].col, newRow,0))
                             gameData[0].row -= playerMoveDistance;
                         checkForLaptop();
                              }
@@ -274,7 +277,7 @@ execute light off;
                 case 83://e
                     if (playerSpaceShip.col + playerMoveDistance < levelWidth) {
                         var newCol = gameData[0].col + playerMoveDistance;
-                        if (!intersectWithCreatures(newCol, gameData[0].row,0) ||
+                        if (!CanMove(newCol, gameData[0].row,0) ||
                             intersect(newCol, gameData[0].row, gameData[2].col, gameData[2].row))
                             {
                                 gameData[0].col += playerMoveDistance;
@@ -283,10 +286,8 @@ execute light off;
                         //check for easterly access to steps
                         if (intersect(gameData[0].col, gameData[0].row, gameData[2].col, gameData[2].row))
                             {
-                            //commandObject = { level: gameData };
-                            commandObject = { map: gameData };
-                                callServer(null, '@Url.Action("Sync","Home")', processSyncData, commandObject);
-                                //callServer(null, '@Url.Action("NewLevel","Home")', processSyncData, commandObject);
+                            var commandObject = { level: gameData };
+                            callServer(null, '@Url.Action("NewLevel","Home")', processSyncData, commandObject);
                             }
                             
                     }
@@ -294,7 +295,7 @@ execute light off;
                 case 90://s
                     if (playerSpaceShip.row + playerMoveDistance < levelWidth - 20) {
                         var newRow = gameData[0].row + playerMoveDistance;
-                        if (!intersectWithCreatures(gameData[0].col, newRow,0))
+                        if (!CanMove(gameData[0].col, newRow,0))
                             gameData[0].row += playerMoveDistance;
                             checkForLaptop();
                     }
@@ -336,7 +337,7 @@ execute light off;
                                                       gameData[0].col,gameData[0].row,
                                                       gameData[i].blocked);
 
-                    if (!intersectWithCreatures(tempMoveObject.col, tempMoveObject.row, i)) {
+                    if (!CanMove(tempMoveObject.col, tempMoveObject.row, i)) {
                         gameData[i].row = tempMoveObject.row;
                         gameData[i].col = tempMoveObject.col;
                     }
@@ -354,12 +355,12 @@ execute light off;
                             killMessage = " You killed the " + gameData[i].Description;
                             gameData[i].visible = false;
                             gameData[i].canMove = false;
+                            //TODO CHANGE THE BOSS KILL GAME OVER STATE
                             if (gameData[i].Description == "Dragon") {
                                 callServer(null, '@Url.Action("EndGame","Home")', processWinGame, null);                            }
 
                         }
                         else {
-                            //gameData[0].o.Power--;//BUG not syncing
                             playerLives = playerLives - 1;
                             killMessage = " You have lost 1 life," + playerLives + " remaining";
                         }
@@ -404,13 +405,14 @@ execute light off;
             return false;
         };
 
-        var intersectWithCreatures = function (firstX, firstY,index) {
+        var CanMove = function (firstX, firstY,index) {
            
             var startIndex = (index == 0)?1:0; 
             for(var i=startIndex; i<gameData.length;i++)
             {
                 var obj = gameData[i];
-                if (obj != null && obj .visible && i != index && intersect(obj.col, obj.row, firstX, firstY) && obj.canMove == true) {
+                if (obj != null && obj .visible && i != index && intersect(obj.col, obj.row, firstX, firstY) && (obj.canMove == true || 
+                    (obj.Description =="Wall" || obj.Description == "Door" ))) {
                     return true;
                 }
                 if (index == 0 && obj != null && obj.visible && i != index && intersect(obj.col, obj.row, firstX, firstY)

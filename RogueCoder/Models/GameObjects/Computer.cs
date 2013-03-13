@@ -131,13 +131,15 @@ namespace RogueCoder.Models
                         line = loopLine;
                     }
                     break;
-
-                case "IF":
+                case "IFCONNECTDISPLAY":
                     {
-                        string condition = parameters[0];
-                        //determined the condition 
-                        //set the if condition
-
+                        if (ConnectCommand(parameters, gameObjects, output) == "Connected")
+                        {
+                            if (parameters[1].ToUpper() == "LOOPCOUNT")
+                                output = loopCount.ToString();
+                            else
+                                output = parameters[1];
+                        }
                     }
                     break;
                 case "THEN":
@@ -159,7 +161,6 @@ namespace RogueCoder.Models
                         if (parameters.Count >= 2)
                         {
                             param = parameters[1];
-                            //commandParam = parameters[2];
                         }
 
                         ComputerAccessibleObject gameObjectFound = gameObjects.FirstOrDefault(g => g.name == gameObject);
@@ -177,27 +178,7 @@ namespace RogueCoder.Models
 
                     break;
                 case "CONNECT":
-                    if (gameObjects == null)
-                    { 
-                        output = "No game objects";
-                    }
-                    else
-                    {
-                        string gameObject = parameters[0];
-                        string param = string.Empty;
-                        string pwd = string.Empty;
-                        if (parameters.Count >= 2)
-                        {
-                            param = parameters[0];
-                            pwd = parameters[1];
-                        }
-
-                        ComputerAccessibleObject gameObjectFound = gameObjects.FirstOrDefault(g=>g.name == gameObject);
-                        if (gameObjectFound == null)
-                            output = String.Format("No object called  {0} can be found",gameObject);
-                        else
-                            output = (gameObjectFound.Connect(pwd)) ? "Connected" : "No Connected";
-                    }
+                    output = ConnectCommand(parameters, gameObjects, output);
                     break; 
                 default:
                     Error = "Not a valid command" + command.ToUpper();
@@ -205,6 +186,35 @@ namespace RogueCoder.Models
             }
 
             return output; 
+        }
+
+        private string ConnectCommand(List<string> parameters, List<ComputerAccessibleObject> gameObjects, string output)
+        {
+            if (gameObjects == null)
+            {
+                output = "No game objects";
+            }
+            else
+            {
+                string gameObject = parameters[0];
+                string param = string.Empty;
+                string pwd = string.Empty;
+                if (parameters.Count >= 2)
+                {
+                    param = parameters[0];
+                    if (parameters[1].ToUpper() == "LOOPCOUNT")
+                        pwd = loopCount.ToString();
+                    else
+                        pwd = parameters[1];
+                }
+
+                ComputerAccessibleObject gameObjectFound = gameObjects.FirstOrDefault(g => g.name == gameObject);
+                if (gameObjectFound == null)
+                    output = String.Format("No object called  {0} can be found", gameObject);
+                else
+                    output = (gameObjectFound.Connect(pwd)) ? "Connected" : "No Connected";
+            }
+            return output;
         }
 
     }

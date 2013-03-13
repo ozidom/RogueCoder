@@ -62,8 +62,12 @@
 </div>
 <div id="ComputerScreenContainerDiv" class="ComputerScreenContainerDiv"  >
     <textarea id="ComputerScreenDiv" class="ComputerScreenDiv" >
-connect light 123;
-execute light off;
+--connect light 123;
+--execute light off;
+loop 100;
+ifconnectdisplay light loopcount;
+loopend;
+
     </textarea>xs
 
     <input type="button" name="btnClose" value="x"  id="btnClose" class="btnClose" onclick="$('#ComputerScreenContainerDiv').hide();"/>
@@ -191,7 +195,7 @@ execute light off;
             $('#serverprocessingdisplay').hide(1000);
             IsServerProcessing = false;
             $('#ComputerScreenContainerDiv').hide();
-            $('#GameDiv').text("Code has been run...");
+            $('#GameDiv').text("Code has been run: "+gameLevelData.Output);
             drawScreen();
         };
 

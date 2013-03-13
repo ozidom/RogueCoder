@@ -249,5 +249,7 @@ namespace RogueCoder.Models
         public bool Elevator { get; set; }
 
         public bool[] Doors { get; set; }
+
+        public string Output { get; set; }
     }
 }

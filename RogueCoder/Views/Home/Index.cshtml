@@ -20,7 +20,9 @@
         </div>
 
         <div>
-        <input type="button" value="Continue" onclick="$('#dialog').hide(1000);" />
+            <input type="button" class="startButton" value="Start (Easy)" onclick="$('#dialog').hide(1000);" />
+            <input type="button" class="startButton" value="Start (Medium)" onclick="$('#dialog').hide(1000);" />
+            <input type="button" class="startButton" value="Start (Hard)" onclick="$('#dialog').hide(1000);" />
         </div> 
 </div>
 <div id="gameWinScreen" class="GameOverDiv">
@@ -55,8 +57,12 @@
         <input type="button" value="Close" onclick="$('#AboutDiv').hide(1000);" />
     </div> 
 </div>
-<div id="DiceDiv" class="DiceDiv">
+<div id="LaptopDiv" class="DiceDiv">
     <input id="Laptop" type="button" value="Laptop"/>"
+    <input id="Help" type="button" value="Help"/>"
+    <input id="About" type="button" value="About"/>"
+    <input id="Contact Developer" type="button" value="Contact"/>"
+
 </div>
 <div id="GameDiv" class="GameDiv" >
 </div>
@@ -81,13 +87,6 @@ loopend;
     <div id="ConversationText2" class="ConversationText"></div><br />
     <input type="button" name="btnClose" value="x"  class="btnCloseConversation"  onclick="$('#ConversationTextDiv').hide();"/>
 </div>
-<div id ="menu" class="menu"  >
-     <input type="button" value="?" onclick="$('#HowToPlayDiv').show(1000);" />
-     <input type="button" value="About" onclick="$('#AboutDiv').show(1000);" />
-</div>
-<div id ="debug" class="debug"  >
-     
-</div>
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -109,7 +108,8 @@ loopend;
         var SyncTurns = 10;                     //rounds before a sync occurs
         var currentDice = 4;                    //workaround for server probs
         var maxDice = 4;                        //workaround for server probs
-        var playerLives = 8;                    //workaround for server probs
+        var playerLives;                        //workaround for server probs
+        var inConversation = false;
 
         $('#AboutDiv').hide();
         $('#HowToPlayDiv').hide();
@@ -264,47 +264,49 @@ loopend;
                 case 71:
                     //g
                     break;
-                case 65:
+                case 65://w
                     if (playerSpaceShip.col - playerMoveDistance >= 0 )
                     {
                         var newCol = gameData[0].col - playerMoveDistance;
-                        if (!CanMove(newCol, gameData[0].row,0))
+                        if (!blockedMove(newCol, gameData[0].row, 0))  {
                             gameData[0].col -= playerMoveDistance;
-                        checkForLaptop();
-                        checkForElevator();
+                            //checkForLaptop();
+                            checkForConversation();
+                            checkForElevator();
+                        }
                     }
                     break;
                 case 87://n
                     if (playerSpaceShip.row - playerMoveDistance >= 0) {
                         var newRow = gameData[0].row - playerMoveDistance;
-                        if (!CanMove(gameData[0].col, newRow,0))
+                        if (!blockedMove(gameData[0].col, newRow, 0)) {
                             gameData[0].row -= playerMoveDistance;
-                        checkForLaptop();
-                        checkForElevator();
+                            //checkForLaptop();
+                            checkForConversation();
+                            checkForElevator();
+                        }
                     }
 
                     break;
                 case 83://e
                     if (playerSpaceShip.col + playerMoveDistance < levelWidth) {
                         var newCol = gameData[0].col + playerMoveDistance;
-                        if (!CanMove(newCol, gameData[0].row,0) ||
-                            intersect(newCol, gameData[0].row, gameData[2].col, gameData[2].row))
-                            {
-                                gameData[0].col += playerMoveDistance;
-                                checkForLaptop();
-                            }
-                        //check for easterly access to steps
-                        checkForElevator();
+                        if (!blockedMove(newCol, gameData[0].row, 0)) {
+                            gameData[0].col += playerMoveDistance;
+                            checkForConversation();
+                            checkForElevator();
+                        }
                             
                     }
                     break;
                 case 90://s
                     if (playerSpaceShip.row + playerMoveDistance < levelWidth - 20) {
                         var newRow = gameData[0].row + playerMoveDistance;
-                        if (!CanMove(gameData[0].col, newRow,0))
+                        if (!blockedMove(gameData[0].col, newRow, 0)) {
                             gameData[0].row += playerMoveDistance;
-                        checkForLaptop();
-                        checkForElevator();
+                            checkForConversation();
+                            checkForElevator();
+                        }
                     }
                     break;
                 case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
@@ -317,7 +319,7 @@ loopend;
 
         var checkForElevator = function () {
             //check for easterly access to steps
-            if (intersect(gameData[0].col, gameData[0].row, gameData[2].col, gameData[2].row)) {
+            if (intersect(gameData[0].col, gameData[0].row, gameData[1].col, gameData[1].row)) {
                 var commandObject = { level: gameData };
                 callServer(null, '@Url.Action("NewLevel","Home")', processSyncData, commandObject);
                         }
@@ -347,21 +349,23 @@ loopend;
         var takeComputerActions = function () {
             for (var i = 1; i < gameData.length; i++) {
                 var tempMoveObject
-                if (gameData[i].canMove && gameLevelData.Lights == true) {
-                    tempMoveObject = moveToObject(gameData[i].col, gameData[i].row,
-                                                  gameData[0].col, gameData[0].row,
-                                                  gameData[i].blocked);
+                if (gameData[i].canMove == true && gameLevelData.Lights == true) {
+                    tempMoveObject =
+                        moveToObject(gameData[i].col, gameData[i].row,
+                                     gameData[0].col, gameData[0].row,
+                                     gameData[i].blocked);
 
-                    if (!CanMove(tempMoveObject.col, tempMoveObject.row, i)) {
+                    if (!blockedMove(tempMoveObject.col, tempMoveObject.row, i)) {
                         gameData[i].row = tempMoveObject.row;
                         gameData[i].col = tempMoveObject.col;
                     }
                     else {
                         //You roll and he rolls
-                        var t = getObjectByCoords(tempMoveObject.col, tempMoveObject.row);
 
-                        if (t != null && t.Description == "Guard" ) {
-                            displayMessage = "attacking guard";
+                        //if (IsObject(self,i,"Guard")){
+                        if (false)
+                        {
+                            return;
                         }
                         else
                         {
@@ -425,29 +429,38 @@ loopend;
             return false;
         };
 
-        var CanMove = function (firstX, firstY,index) {
+        var blockedMove = function (firstX, firstY,index) {
            
             var startIndex = (index == 0)?1:0; 
             for(var i=startIndex; i<gameData.length;i++)
             {
-                if (IsObject(i,index,"Wall") || IsObject(i,index,"Guard"))
+                if ((gameData[i].Description == "Wall" || gameData[i].Description == "Guard" || gameData[i].Description == "Hero" || gameData[i].Description == "Prisoner") &&
+                    gameData[i].row == firstY && gameData[i].col == firstX)
                 {
                     return true;
                 }
-                var obj = gameData[i];
-                if (index == 0 && obj != null && obj.visible && i != index && intersect(obj.col, obj.row, firstX, firstY)
-                    && obj.canMove == false && obj.ID == 999) {
+            }
+            return false
+        }
+
+        var checkForConversation = function () {
+            //check for easterly access to steps
+            for (var i = 1; i < gameData.length; i++) {
+                if (gameData[i].ID=999 && gameData[i].Description != "Guard" && intersect(gameData[0].col, gameData[0].row, gameData[i].col, gameData[i].row)) {
                     $("#ConversationTextDiv").show();
-                    for (var i = 0; i < 3; i++) {
-                        var subjectArray = obj.directionImage[i].split("-", 2);
-                        $("#ConversationSubject"+ i).text(subjectArray[0]);
-                        $("#ConversationText" + i).text(subjectArray[1]);
+                    var obj = gameData[i];
+                    if (obj.directionImage != null) {
+                        for (var i = 0; i < 3; i++) {
+                            var subjectArray = obj.directionImage[i].split("-", 2);
+                            $("#ConversationSubject" + i).text(subjectArray[0]);
+                            $("#ConversationText" + i).text(subjectArray[1]);
+                        }
+                        return;
                     }
-                    return true;
                 }
             }
-            return false;
-        };
+            $("#ConversationTextDiv").hide();
+        }
 
         var IsObject = function(i,self,objectType) {
             var obj = gameData[i];
@@ -480,18 +493,28 @@ loopend;
             }
         });
 
-        $("#DiceDiv :input").click(function (e) {
-            
-            if (gameData[0].HasLaptop) {
-                $('#ComputerScreenContainerDiv').show();
-                $("#GameDiv").text("Showing laptop... ");
-            }
-            else {
-                $("#GameDiv").text("You dont have a laptop");
-            }
-
-
+        $("#LaptopDiv :input").click(function (e) {
+                $('#ComputerScreenContainerDiv').toggle();
         });
+
+        $('.startButton').click(function (e) {
+            switch (this.value) {
+                case "Start (Easy)":
+                    playerLives = 20;
+                    break;
+                case "Start (Medium)":
+                    playerLives = 10;
+                    break;
+                case "Start (Hard)":
+                    playerLives = 5;
+                    break;
+            }
+            
+            $('#dialog').hide(1000);
+        });
+
+        
+
         commandObject = { map: gameData };
 
         callServer(null, '@Url.Action("Sync","Home")', processSyncData, commandObject);

@@ -23,7 +23,7 @@ namespace RogueCoder.Models
             switch (type)
             {
                 case GameEnums.CreatureType.human:
-                    description = "Human";
+                    description = "Hero";
                     imageFileName = GameImages.Hero;
                     break;
                 case GameEnums.CreatureType.guardlevel1:

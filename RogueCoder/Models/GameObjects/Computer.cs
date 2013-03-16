@@ -142,12 +142,6 @@ namespace RogueCoder.Models
                         }
                     }
                     break;
-                case "THEN":
-                    string then = parameters[0];
-                    //only handle this if we have an if condition
-                    //clear the if condition
-                    //
-                    break;
                 case "EXECUTE":
                     if (gameObjects == null)
                     {
@@ -179,7 +173,17 @@ namespace RogueCoder.Models
                     break;
                 case "CONNECT":
                     output = ConnectCommand(parameters, gameObjects, output);
-                    break; 
+                    break;
+                case "LISTOBJECTS":
+                    StringBuilder objects = new StringBuilder();
+                    gameObjects.ToList().ForEach(g => objects.Append(g.name+ ";"));
+                    output = "objects available:" + objects.ToString();
+
+                    break;
+                case "HELP":
+                    output = "HELP FOR DOMINICSCRIPT: DISPLAY [TEXT]; DISPLAYVAR [VAR];, -- {COMMENT},VARINT ,VARBOOL [VAR]; " +
+                        "CONNECT [OBJECT], IFCONNECTDISPLAY [VAR/LOOPCOUNT], LOOP [TIMES TO LOOP], LOOPEND, EXECUTE [OBJECT] [PARAMS] HELP";
+                    break;
                 default:
                     Error = "Not a valid command" + command.ToUpper();
                     break;

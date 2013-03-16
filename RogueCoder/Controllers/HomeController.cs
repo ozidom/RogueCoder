@@ -60,14 +60,19 @@ namespace RogueCoder.Controllers
             string output = computer.Run(compiledCode, ref newCaos, out runTimeErrors);
 
             //Process Lights
-            LightCAO lights = newCaos.Cast<LightCAO>().FirstOrDefault(c => c.name == "light");
-            game.Lights = lights.state;
+            ComputerAccessibleObject lightCao = newCaos.FirstOrDefault(c => c.GetDescription() == "Light");
+            game.Lights = lightCao != null ? ((ElevatorLockCAO)lightCao).state : true;
            
             //Process Doors
             game.Doors = new bool[10];
 
             //Process Elevator
-            game.Elevator = false;
+            ComputerAccessibleObject cao = newCaos.FirstOrDefault(c => c.GetDescription() == "Elevator Lock");
+
+            if (cao != null)
+                game.Elevator = ((ElevatorLockCAO)cao).state;// elock.state;
+            else
+                game.Elevator = false;
 
             //Process auto Guns if applicable
             //game.AutoGun = false;

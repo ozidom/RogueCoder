@@ -45,12 +45,23 @@ namespace RogueCoder.Models
             //var prisoners = GetRandomProgrammers(level);
             //prisoners.ToList().ForEach(p => Level.Add(p));
            
-
             LoadWallsForLevel();
 
             //Add the CAOs
             caos = new List<ComputerAccessibleObject>();
             caos.Add(new LightCAO{name="light",password="123"});
+
+            if (level == 1)
+            {
+                caos.Add(new LightCAO { name = "light", password = "123" });
+            }
+
+            if (level == 2)
+            {
+                caos.Add(new ElevatorLockCAO { name = "Elevator Lock", password = "123" });
+            }
+
+       
 
 
         }
@@ -88,7 +99,7 @@ namespace RogueCoder.Models
                 case 2:
                     Level.Add(CreatureFactory.CreateCreature(0, GameEnums.CreatureType.guardlevel2, 180, 160, 4,4).GetTile());
                     Level.Add(CreatureFactory.CreateCreature(0, GameEnums.CreatureType.guardlevel2, 160, 260, 5,4).GetTile());
-                    Level.Add(CreatureFactory.CreateCreature(0, GameEnums.CreatureType.guardlevel2, 190, 160, 4,4).GetTile());
+                    Level.Add(CreatureFactory.CreateCreature(0, GameEnums.CreatureType.guardlevel2, 220, 160, 4,4).GetTile());
                     Level.Add(CreatureFactory.CreateCreature(0, GameEnums.CreatureType.guardlevel2, 160, 360, 5,4).GetTile());
                    
                     break;
@@ -129,117 +140,40 @@ namespace RogueCoder.Models
             switch (levelNumber)
             {
                 case 1:
-                    Level.Add(new Creature(999, "Tigger", GameImages.Prisoner, 100, 40, 2, 2, false,
-                              new string[3] { "Pizza - Try to get the pizza on level 2 it will give you a boost", "Tigger - they call me tigger because I get excited, so what who doesn't get excited about code", "Masters - YOu need to find masters on level 2, if he's not there today come back later on, seriously you need him" }).GetTile());
-                    Level.Add(new Creature(999, "Dom", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Advice - you can find lots of advice for this game on my blog domscode.com - if only you had access to a browser  ", "Helper Classes - I hate helper classes,helper classes are for dummies", "Programming - Iterate or perish" }).GetTile());
+                    Level.Add(new Creature(999, "Prisoner:Tigger", GameImages.Prisoner, 100, 40, 2, 2, false,
+                              new string[3] { "Pizza - I really like pizza, hey we should have pizza one day", "Tigger - they call me tigger because I get excited, so what who doesn't get excited about code", "Masters - You need to find masters on level 2, if he's not there today come back later on, seriously you need him" }).GetTile());
+                    Level.Add(new Creature(999, "Prisoner:Turnstyles", GameImages.Prisoner, 200, 200, 2, 2, false,
+                              new string[3] { "Advice - you can find lots of advice for this game on my blog domscode.com - if only you had access to a browser  ", "Advice - there is a laptop hidden in the corner - the guards will kill me if I go near it ", "Help -  my favourite command is HELP" }).GetTile());
+                    Level.Add(new Creature(999, "Prisoner:Another", GameImages.Prisoner, 300, 300, 2, 2, false,
+                              new string[3] { "Advice - you can find lots of advice for this game on my blog domscode.com - if only you had access to a browser  ", "Advice - there is a laptop hidden in the corner - the guards will kill me if I go near it ", "Help -  my favourite command is HELP" }).GetTile());
+                  
+                              
                     break;
                 case 2:
-                    Level.Add(new Creature(999, "Tigger", GameImages.Prisoner, 100, 40, 2, 2, false,
-                              new string[3] { "Pizza - Try to get the pizza on level 2 it will give you a boost", "Tigger - they call me tigger because I get excited, so what who doesn't get excited about code", "Masters - YOu need to find masters on level 2, if he's not there today come back later on, seriously you need him" }).GetTile());
-                    Level.Add(new Creature(999, "Dom", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Advice - you can find lots of advice for this game on my blog domscode.com - if only you had access to a browser  ", "Helper Classes - I hate helper classes,helper classes are for dummies", "Programming - Iterate or perish" }).GetTile());
-                 
+                    Level.Add(new Creature(999, "Prisoner:Masters", GameImages.Prisoner, 200, 200, 2, 2, false,
+                              new string[3] { "Help -  my favourite command is HELP", "Helper Classes - I love helper classes and HELP", "Cool Command - not sure its common knowlege but LISTOBJECTS is very useful" }).GetTile());
+                    Level.Add(new Creature(999, "Prisoner:Grisha", GameImages.Prisoner, 240, 280, 2, 2, false,
+                              new string[3] { "Advice - You need to connect to a device before you can do anything - some devices have passwords - just use CONNECT [DEVICE NAME]", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile());
                     break;
                 case 3:
-                     Level.Add(new Creature(999, "Tigger", GameImages.Prisoner, 100, 40, 2, 2, false,
+                    Level.Add(new Creature(999, "Prisoner:Fingers", GameImages.Prisoner, 290, 300, 2, 2, false,
+                              new string[3] { "Good Code - Comments need two dashes, Every line needs to finish with a ; derrrrrrrrr", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile());
+                    Level.Add(new Creature(999, "Prisoner:Cranky", GameImages.Prisoner, 150, 40, 2, 2, false,
                               new string[3] { "Pizza - Try to get the pizza on level 2 it will give you a boost", "Tigger - they call me tigger because I get excited, so what who doesn't get excited about code", "Masters - YOu need to find masters on level 2, if he's not there today come back later on, seriously you need him" }).GetTile());
-                    Level.Add(new Creature(999, "Dom", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Advice - you can find lots of advice for this game on my blog domscode.com - if only you had access to a browser  ", "Helper Classes - I hate helper classes,helper classes are for dummies", "Programming - Iterate or perish" }).GetTile());
-                   break;
+            break;
                 case 4:
-                     Level.Add(new Creature(999, "Tigger", GameImages.Prisoner, 100, 40, 2, 2, false,
+            Level.Add(new Creature(999, "Prisoner:Treebeard", GameImages.Prisoner, 100, 40, 2, 2, false,
                               new string[3] { "Pizza - Try to get the pizza on level 2 it will give you a boost", "Tigger - they call me tigger because I get excited, so what who doesn't get excited about code", "Masters - YOu need to find masters on level 2, if he's not there today come back later on, seriously you need him" }).GetTile());
-                    Level.Add(new Creature(999, "Dom", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Advice - you can find lots of advice for this game on my blog domscode.com - if only you had access to a browser  ", "Helper Classes - I hate helper classes,helper classes are for dummies", "Programming - Iterate or perish" }).GetTile());
-                 
+            Level.Add(new Creature(999, "Prisoner:Snarler", GameImages.Prisoner, 200, 200, 2, 2, false,
+                              new string[3] { "Advice - don't anoy me ", "Code Generation - there is nothing wrong with wrting your own code generator, Actually I have written one for for dominicscript - I have a copy around here, hey did you see my keys...", "Programming - check out domscode for advive on writing dominicscript" }).GetTile());
                     break;
                 case 5:
-                    Level.Add(new Creature(999, "Tigger", GameImages.Prisoner, 100, 40, 2, 2, false,
-                              new string[3] { "Pizza - Try to get the pizza on level 2 it will give you a boost", "Tigger - they call me tigger because I get excited, so what who doesn't get excited about code", "Masters - YOu need to find masters on level 2, if he's not there today come back later on, seriously you need him" }).GetTile());
-                    Level.Add(new Creature(999, "Dom", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Advice - you can find lots of advice for this game on my blog domscode.com - if only you had access to a browser  ", "Helper Classes - I hate helper classes,helper classes are for dummies", "Programming - Iterate or perish" }).GetTile());
+                    Level.Add(new Creature(999, "Prisoner:Scott Hanselman", GameImages.Prisoner, 200, 200, 2, 2, false,
+                              new string[3] { "Advice - You should check out Hanselman.com, Hanselminutes.com, thisdeveloperslife.com, have I forgotten anything else, oh but you won't be able to see them from here because we don't get the internet in jail, bummer ", "Me - You should come and see me when I get out of prison at one of my presentations, check Hanselman.com for details, I thats right we don't get the  internet here, bummer ", "Escape - Ok so they say there's no way to escape but I think there's a code sample somewhere on the net somewhere maybe google it, o yeah we don't get the internet here, bummer." }).GetTile());
                    break;
 
             }
 
-        }
-
-
-
-        private Tile[] GetRandomProgrammers(int level)
-        {
-            Tile[] allPrisoners = new Tile[27];
-
-            GetAllPrisoners(allPrisoners);
-            //var prisonersSelected = allPrisoners.ToList().Skip((level - 1) * 5).Take(5);
-
-            var prisonersSelected = allPrisoners.ToList().Take(5);
-            return prisonersSelected.ToArray();
-        }
-
-        private static void GetAllPrisoners(Tile[] prisoners)
-        {
-            //1
-            prisoners[0] = new Creature(999, "Tigger", GameImages.Prisoner, 100, 40, 2, 2, false,
-                              new string[3] { "Pizza - Try to get the pizza on level 2 it will give you a boost", "Tigger - they call me tigger because I get excited, so what who doesn't get excited about code", "Masters - YOu need to find masters on level 2, if he's not there today come back later on, seriously you need him" }).GetTile();
-            prisoners[1] = new Creature(999, "Dom", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Advice - you can find lots of advice for this game on my blog domscode.com - if only you had access to a browser  ", "Helper Classes - I hate helper classes,helper classes are for dummies", "Programming - Iterate or perish" }).GetTile();
-            prisoners[2] = new Creature(999, "Weird Al", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Help -  my favourite command is HELP", "Helper Classes - I love helper classes and HELP", "Try to find a mouse - its actually a good weapon" }).GetTile();
-            prisoners[3] = new Creature(999, "Grisha", GameImages.Prisoner, 240, 280, 2, 2, false,
-                              new string[3] { "Advice - You need to connect to a device before you can do anything - some devices have passwords - just use CONNECT [DEVICE NAME]", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[4] = new Creature(999, "Fingers", GameImages.Prisoner, 290, 300, 2, 2, false,
-                              new string[3] { "Good Code - Comments need two dashes, Every line needs to finish with a ; derrrrrrrrr", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[5] = new Creature(999, "Tigger", GameImages.Prisoner, 150, 40, 2, 2, false,
-                              new string[3] { "Pizza - Try to get the pizza on level 2 it will give you a boost", "Tigger - they call me tigger because I get excited, so what who doesn't get excited about code", "Masters - YOu need to find masters on level 2, if he's not there today come back later on, seriously you need him" }).GetTile();
-            //2
-            prisoners[6] = new Creature(999, "Gigantour", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - If you need to loop then remember ", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[7] = new Creature(999, "G Man", GameImages.Prisoner, 100, 100, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[8] = new Creature(999, "Yaa", GameImages.Prisoner, 150, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[9] = new Creature(999, "Masters", GameImages.Prisoner, 290, 340, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[10] = new Creature(999, "Farty", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-
-            //3
-            prisoners[11] = new Creature(999, "West Ham Stan", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[12] = new Creature(999, "Damo", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[13] = new Creature(999, "XXXXXX", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[14] = new Creature(999, "Little Boris", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[15] = new Creature(999, "Richmond", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-
-            //4
-            prisoners[16] = new Creature(999, "Paul", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[17] = new Creature(999, "XXXXX", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[18] = new Creature(999, "Yogi Bear", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Level 5- I hear that the guards can not be touched" }).GetTile();
-            prisoners[19] = new Creature(999, "DJ", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Command - " }).GetTile();
-            prisoners[20] = new Creature(999, "TreeBeard", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-
-            //5
-            prisoners[21] = new Creature(999, "XXXXXX", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[22] = new Creature(999, "Cranky", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[23] = new Creature(999, "Kevin Home Alone", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[25] = new Creature(999, "Microsoft Cameron", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
-            prisoners[26] = new Creature(999, "Uncle John", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Good Code - You want the good code, you can't handle good code", "Helper Classes - I hate helper classes,helper classes are for dummies", "Static - I hate static freakin methods, you'd have to be mad to use statics" }).GetTile();
         }
 
         private void LoadItemsForLevel()
@@ -248,33 +182,9 @@ namespace RogueCoder.Models
             Random r = new Random();
             int randomX = r.Next(300)+40;
             int randomY = r.Next(300)+40;
-
-            switch (CurrentLevel)
-            {
-                case 1:
-                    //Level.Add(new Dice { Size = 6, Description = "LAPTOP", ID = 1, X = randomX, Y = randomY }.GetTile());
-                    Level.Add(new laptop { Description = "LAPTOP", ID = 1, X = randomX, Y = randomY }.GetTile());
-                    break;
-                case 2:
-                    // Level.Add(new Dice { Size = 8, Description = "LAPTOP", ID = 1, X = randomX, Y = randomY }.GetTile());
-                    Level.Add(new laptop { Description = "LAPTOP", ID = 1, X = randomX, Y = randomY }.GetTile());
-                    break;
-                case 3:
-                    // Level.Add(new Dice { Size = 10, Description = "LAPTOP", ID = 1, X = randomX, Y = randomY }.GetTile());
-                    Level.Add(new laptop { Description = "LAPTOP", ID = 1, X = randomX, Y = randomY }.GetTile());
-                    break;
-                case 4:
-                    //Level.Add(new Dice { Size = 12, Description = "LAPTOP", ID = 1, X = randomX, Y = randomY }.GetTile());
-                    Level.Add(new laptop { Description = "LAPTOP", ID = 1, X = randomX, Y = randomY }.GetTile());
-                    break;
-                case 5:
-                    //Level.Add(new Dice { Size = 20, Description = "LAPTOP", ID = 1, X = randomX, Y = randomY }.GetTile());
-                    Level.Add(new laptop { Description = "LAPTOP", ID = 1, X = randomX, Y = randomY }.GetTile());
-                    break;
-            }
-
+            bool isElevatorVisible = level < 5;
             //place the elevator
-           Level.Add(new Tile { row = 420, col = 340, FileName = GameImages.Elevator, Description = "Elevator", canMove = false, ID = 0, visible = true });
+           Level.Add(new Tile { row = 420, col = 340, FileName = GameImages.Elevator, Description = "Elevator", canMove = false, ID = 0, visible = isElevatorVisible });
      
         }
 

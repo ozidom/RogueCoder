@@ -11,7 +11,7 @@ namespace RogueCoder.Models.TileObjects
         public Tile GetTile()
         {
             string filename = GameImages.LapTop;
-            return new Tile { row = Y, col = X, ID = ID, Description = this.Description, FileName = filename, canMove = false, blocked = false, visible = true,directionImage=new string[2],HasLaptop=false };
+            return new Tile { row = Y, col = X, ID = ID, Description = this.Description, FileName = filename, canMove = false, blocked = false, visible = false,directionImage=new string[2],HasLaptop=false };
         }
 
         public int X

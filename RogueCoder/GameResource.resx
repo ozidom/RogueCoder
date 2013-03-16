@@ -124,15 +124,15 @@
     <value>You have been  killed. Your attempt to rescue the great programmer has failed. Society conttinues in the new technological dark age. Soon all programmers will be forgotten.</value>
   </data>
   <data name="GameTitleText" xml:space="preserve">
-    <value>RogueCoder - Save the programmer</value>
+    <value>RogueCoder - Saving the Hanselman</value>
   </data>
   <data name="GameWinText" xml:space="preserve">
-    <value>Congratulations you have rescured the great programmer. A Helicopter pickss you up on the top of the building and you head off to freedom and take the first small steps in restoring technological equilibrium</value>
+    <value>Congratulations you have rescured the great programmer Scott Hanselman. A Helicopter picks you up on the top of the building and you head off to freedom and take the first small steps in restoring technological equilibrium.</value>
   </data>
   <data name="HelpText" xml:space="preserve">
-    <value>Movement keys are [W,Z,S,A] - click on any object or item to get its description. You need to get to the 5th level  of the prison ...</value>
+    <value>Movement keys are [W,Z,S,A] - click on any object or item to get its description. Use your laptop to send commands to prison objects. Your best advice for using your laptop is by asking other prisoners about using the scripting language dominicscript. In combat each level becomes harder - guards on the higher levels are much harder to defeat and your health points will be lost as you loose fights to the guards. You start the game with 10 health points - when your health points reach 0 you are dead.</value>
   </data>
   <data name="IntroGameText" xml:space="preserve">
-    <value>The year is 2015 and with the election of a number of ultra-conservative governments - programming has been declared illegal and all programmers have been jailed. You are the last hope for the programmers, The last free developer, but instead of staying out of jail you busting in to one of the toughest high security prison to rescue the great programmer John of Statics. Are you up to the job or is society doomed never to write another line of code again.</value>
+    <value>The year is 2015 and with the election of a number of ultra-conservative governments - programming has been declared illegal and all programmers have been jailed. You are the last hope for the programmers, codemonkeys, software engineers and developers. You are indeed,the last free developer, but instead of staying out of jail you are busting in to one of the toughest high security tech prisons to rescue the great programmer Scott Hanselman.  He is being held on the 5th level. If released he will lead the restoration of software development. Are you up to the job or is society doomed never to write another line of code again. Of course you have bothing but your dignity, a head full of code and a laptop.</value>
   </data>
 </root>

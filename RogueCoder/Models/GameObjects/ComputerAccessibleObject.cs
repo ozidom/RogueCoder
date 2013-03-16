@@ -102,6 +102,32 @@ namespace RogueCoder.Models
         }
     }
 
+    public class ElevatorLockCAO : ComputerAccessibleObject
+    {
+        public bool state;
+
+        public ElevatorLockCAO()
+        {
+            name = "Elevator Lock";
+            state = true;
+        }
+
+        public override string GetDescription()
+        {
+            return "Elavtor Lock is " + state.ToString();
+        }
+
+        public override string Execute(string command)
+        {
+            if (base.IsConnected)
+            {
+                state = (command.ToUpper() == "ON" ? true : false);
+                return "Lock is " + state.ToString();
+            }
+            return "Not connected to Elevator lock";
+        }
+    }
+
     public class ConsoleCAO : ComputerAccessibleObject
     {
         public override string Execute(string command)

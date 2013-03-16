@@ -102,6 +102,32 @@ namespace RogueCoder.Models
         }
     }
 
+    public class HatchCAO : ComputerAccessibleObject
+    {
+        public bool state;
+
+        public HatchCAO()
+        {
+            name = "Hatch";
+            state = false;
+        }
+
+        public override string GetDescription()
+        {
+            return "Hatch is " + state.ToString();
+        }
+
+        public override string Execute(string command)
+        {
+            if (base.IsConnected)
+            {
+                state = (command.ToUpper() == "ON" ? true : false);
+                return "Hatch is " + state.ToString();
+            }
+            return "Not connected to Hatch";
+        }
+    }
+
     public class ElevatorLockCAO : ComputerAccessibleObject
     {
         public bool state;

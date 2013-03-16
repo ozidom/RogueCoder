@@ -74,11 +74,8 @@ namespace RogueCoder.Controllers
             else
                 game.Elevator = false;
 
-            //Process auto Guns if applicable
-            //game.AutoGun = false;
-
-            //Process Message
-            //game.message = "";
+            ComputerAccessibleObject hatchCao = newCaos.FirstOrDefault(c => c.name == "Hatch");
+            game.Hatch = hatchCao != null ? ((HatchCAO)hatchCao).state : false;
             
             game.caos = newCaos;
             game.Output = output;

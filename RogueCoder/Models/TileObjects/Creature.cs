@@ -12,19 +12,21 @@ namespace RogueCoder.Models.TileObjects
         public int Power { get; set; }
         bool HasComputer { get; set; }
         bool CanMove { get; set; }
+        bool Visible { get; set; }
         string[] Conversation { get; set; }
-        public Creature(int id,string description,string fileName,int x, int y,int power,int dice,bool canMove,string[] conversation)
+        public Creature(int id,string description,string fileName,int x, int y,int power,int dice,bool canMove,string[] conversation,bool visible = true)
         {
             ID = id;
             Description = description;
             X = x;
             Y = y;
+            
             this.fileName = fileName;
             this.Power = power;
             this.dice = dice;
             CanMove = canMove;
             Conversation = conversation;
-
+            Visible = visible;
             HasComputer = false;
             
         }

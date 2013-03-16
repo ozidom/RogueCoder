@@ -30,7 +30,7 @@
           @RogueCoder.GameResource.GameWinText
     </div>
     <div style="position:absolute;vertical-align:bottom">   
-        <input type="button" value="OK" onclick="location.reload(true);" />
+        <input type="button" value="Start Again" onclick="location.reload(true);" />
     </div> 
 </div>
 <div id="gameLooseScreen" class="GameOverDiv">
@@ -200,7 +200,11 @@ loopend;
             $('#serverprocessingdisplay').hide(1000);
             IsServerProcessing = false;
             $('#ComputerScreenContainerDiv').hide();
-            $('#GameDiv').text("Code has been run: "+gameLevelData.Output);
+            $('#GameDiv').text("Code has been run: " + gameLevelData.Output);
+            if (gameLevelData.Hatch == true) {
+                alert('You here the deafening noise as a hidden hatch appears in the top of the ceiling');
+                $("#gameWinScreen").show();
+            }
             drawScreen();
         };
 
@@ -360,9 +364,7 @@ loopend;
                         gameData[i].col = tempMoveObject.col;
                     }
                     else {
-                        //You roll and he rolls
-
-                        //if (IsObject(self,i,"Guard")){
+                        
                         if (false)
                         {
                             return;
@@ -412,6 +414,9 @@ loopend;
                 
                 $('#GameDiv').text(displayMessage);
                 displayMessage = "";
+
+               
+
                 //Now draw screen
                 drawScreen();
 
@@ -489,7 +494,7 @@ loopend;
                 }
             }
             if (!collision) {
-                $("#GameDiv").text("");
+                $("#GameDiv").text(fixedX + ":"+  fixedY);
             }
         });
 
@@ -500,7 +505,7 @@ loopend;
         $('.startButton').click(function (e) {
             switch (this.value) {
                 case "Start (Easy)":
-                    playerLives = 20;
+                    playerLives = 200;
                     break;
                 case "Start (Medium)":
                     playerLives = 10;

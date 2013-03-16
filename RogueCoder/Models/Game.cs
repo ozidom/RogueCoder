@@ -16,6 +16,7 @@ namespace RogueCoder.Models
  
         public bool Lights { get; set; }
         private int level;
+        public bool Hatch { get; set; }
         
         public Game(int level)
         {
@@ -58,7 +59,15 @@ namespace RogueCoder.Models
 
             if (level == 2)
             {
+                
                 caos.Add(new ElevatorLockCAO { name = "Elevator Lock", password = "123" });
+            }
+
+            if (level == 4)
+            {
+                Random r = new Random();
+                int randomNumber = r.Next(1000);
+                caos.Add(new HatchCAO { name = "Hatch", password =randomNumber.ToString() });
             }
 
        
@@ -165,12 +174,13 @@ namespace RogueCoder.Models
             Level.Add(new Creature(999, "Prisoner:Treebeard", GameImages.Prisoner, 100, 40, 2, 2, false,
                               new string[3] { "Pizza - Try to get the pizza on level 2 it will give you a boost", "Tigger - they call me tigger because I get excited, so what who doesn't get excited about code", "Masters - YOu need to find masters on level 2, if he's not there today come back later on, seriously you need him" }).GetTile());
             Level.Add(new Creature(999, "Prisoner:Snarler", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Advice - don't anoy me ", "Code Generation - there is nothing wrong with wrting your own code generator, Actually I have written one for for dominicscript - I have a copy around here, hey did you see my keys...", "Programming - check out domscode for advive on writing dominicscript" }).GetTile());
-                    break;
-                case 5:
+                              new string[3] { "Ghost - in the bottom left corner I think there is ghost, he just keeps moaning during the night maybe it's just a project manager, he certainly moans enough to be a project manager", "Code Generation - there is nothing wrong with wrting your own code generator, Actually I have written one for for dominicscript - I have a copy around here, hey did you see my keys...", "Programming - check out domscode for advive on writing dominicscript" }).GetTile());
+           /* Level.Add(new Creature(999, "Ghost", GameImages.Prisoner,30, 440, 2, 2, false,
+                            new string[3] { "Advice - don't anoy me ", "Code Generation - there is nothing wrong with wrting your own code generator, Actually I have written one for for dominicscript - I have a copy around here, hey did you see my keys...", "Escape - try this code on level 5 connect to the HATCH and then EXECUTE HATCH OPEN" },false).GetTile());
+
                     Level.Add(new Creature(999, "Prisoner:Scott Hanselman", GameImages.Prisoner, 200, 200, 2, 2, false,
-                              new string[3] { "Advice - You should check out Hanselman.com, Hanselminutes.com, thisdeveloperslife.com, have I forgotten anything else, oh but you won't be able to see them from here because we don't get the internet in jail, bummer ", "Me - You should come and see me when I get out of prison at one of my presentations, check Hanselman.com for details, I thats right we don't get the  internet here, bummer ", "Escape - Ok so they say there's no way to escape but I think there's a code sample somewhere on the net somewhere maybe google it, o yeah we don't get the internet here, bummer." }).GetTile());
-                   break;
+                              new string[3] { "Advice - You should check out Hanselman.com, Hanselminutes.com, thisdeveloperslife.com, have I forgotten anything else, oh but you won't be able to see them from here because we don't get the internet in jail, bummer ", "Me - You should come and see me when I get out of prison at one of my presentations, check Hanselman.com for details, I thats right we don't get the  internet here, bummer ", "Escape - Ok so they say there's no way to escape but I have heard of a ghost on level 4 who might know how to do it." }).GetTile());
+                */   break;
 
             }
 

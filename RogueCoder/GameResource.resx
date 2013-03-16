@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>put stuff here</value>
+    <value>Game built for the 7drl comp 2013. It is based on the f/w used for my previous #1GAM entries for Jan and Feb in 2013.The basis of the game is from my failed entry for the #7DRL in 2012  and there has been some reuse of ideas from that  attempt</value>
   </data>
   <data name="GameLooseText" xml:space="preserve">
-    <value>You have been re-captured the. You spend the rest of your life in prison. You never type another line of code again.</value>
+    <value>You have been  killed. Your attempt to rescue the great programmer has failed. Society conttinues in the new technological dark age. Soon all programmers will be forgotten.</value>
   </data>
   <data name="GameTitleText" xml:space="preserve">
-    <value>RogueCoder - Saving private Hanselman</value>
+    <value>RogueCoder - Save the programmer</value>
   </data>
   <data name="GameWinText" xml:space="preserve">
-    <value>Congratulations you have escaped.Victory is yours!!!</value>
+    <value>Congratulations you have rescured the great programmer. A Helicopter pickss you up on the top of the building and you head off to freedom and take the first small steps in restoring technological equilibrium</value>
   </data>
   <data name="HelpText" xml:space="preserve">
     <value>Movement keys are [W,Z,S,A] - click on any object or item to get its description. You need to get to the 5th level  of the prison ...</value>
   </data>
   <data name="IntroGameText" xml:space="preserve">
-    <value>The year is 2015 and with the election of a number of ultra-conservative governments - programming has been declared illegal and all programmers have been jailed. You are the last hope for the programmers, The last free developer, but instead of staying out of jail you busting in to one of the toughest high security prison to rescue the great programmer Scott Hanselman - yes thats right Scott Hanselman as in Hanselman.com, Hanselminutes.com, thislife.com and many more .com's. Are you up to the job or is society doomed never to write another line of code again</value>
+    <value>The year is 2015 and with the election of a number of ultra-conservative governments - programming has been declared illegal and all programmers have been jailed. You are the last hope for the programmers, The last free developer, but instead of staying out of jail you busting in to one of the toughest high security prison to rescue the great programmer John of Statics. Are you up to the job or is society doomed never to write another line of code again.</value>
   </data>
 </root>

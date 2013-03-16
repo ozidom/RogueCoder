@@ -24,26 +24,26 @@ namespace RogueCoder.Models
             {
                 case GameEnums.CreatureType.human:
                     description = "Human";
-                    imageFileName = GameImages.PinkMan;
+                    imageFileName = GameImages.Hero;
                     break;
                 case GameEnums.CreatureType.guardlevel1:
-                    description = "Guard level 1";
+                    description = "Guard";
                     imageFileName = GameImages.LevelOneGuard;
                     break;
                 case GameEnums.CreatureType.guardlevel2:
-                    description = "Guard level 2";
+                    description = "Guard";
                     imageFileName = GameImages.LevelTwoGuard;
                     break;
                 case GameEnums.CreatureType.guardlevel3:
-                    description = "Guard level 3";
+                    description = "Guard";
                     imageFileName = GameImages.LevelThreeGuard;
                     break;
                 case GameEnums.CreatureType.guardlevel4:
-                    description = "Guard level 4";
+                    description = "Guard";
                     imageFileName = GameImages.LevelFourGuard;
                     break;
                 case GameEnums.CreatureType.guardlevel5:
-                    description = "Guard level 5";
+                    description = "Guard";
                     imageFileName = GameImages.LevelFiveGuard;
                     break;
                 case GameEnums.CreatureType.Prisoner:

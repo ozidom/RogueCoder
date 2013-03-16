@@ -31,18 +31,14 @@ namespace RogueCoder.Models.TileObjects
 
         public Tile GetTile()
         {
-            string[] conversation = new string[2];
-            conversation[0] = "hi - hi there fella";
-            conversation[1] = "hello - yes hello there";
-            Tile t = new Tile { row = Y, col = X, ID = ID, Description = this.Description, FileName = fileName, canMove = CanMove, blocked = false, visible = true,directionImage=conversation,HasLaptop=false };
+            string[] conversation = new string[3];
+
+            Tile t = new Tile { row = Y, col = X, ID = ID, Description = this.Description, FileName = fileName, canMove = CanMove, blocked = false, visible = true,directionImage=Conversation,HasLaptop=false };
             return t;
         }
 
         public int X { get;set;}
         public int Y { get;set;}
-        public int dice { get; set; }
-
-        //public int[] DiceCollection { get; set; }
-       
+        public int dice { get; set; } 
     }
 }

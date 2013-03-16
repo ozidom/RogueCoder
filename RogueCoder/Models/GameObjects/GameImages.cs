@@ -29,6 +29,7 @@ namespace RogueCoder.Models.GameObjects
 
         public static readonly string RedDragon = ServerLoc + "/Content/Images/RedDragon.png";
         public static readonly string Vampire = ServerLoc + "/Content/Images/Vampire.png";
+        public static readonly string Hero = ServerLoc + "/Content/Images/RedMan.png";
 
         public static readonly string Steps = ServerLoc + "/Content/Images/Steps.png";
         public static readonly string DicePrefix = ServerLoc +  "/Content/Images/D";

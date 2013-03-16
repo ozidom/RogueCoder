@@ -67,20 +67,22 @@
 loop 100;
 ifconnectdisplay light loopcount;
 loopend;
-
-    </textarea>xs
-
-    <input type="button" name="btnClose" value="x"  id="btnClose" class="btnClose" onclick="$('#ComputerScreenContainerDiv').hide();"/>
-    <input type="button" name="btnRun" value="RUN"  id="btnRun" class="btnRun"/>
+</textarea>
+    <input type="button"  value="x"  id="btnCloseComputer"  class="btnCloseComputer" onclick="$('#ComputerScreenContainerDiv').hide();"/>
+    <input type="button"  value="RUN"  id="btnRunCode" class="btnRunCode"  />
 
 </div>
 <div id="ConversationTextDiv" class="ConversationTextDiv">
-    <div id="ConversationText">
-    </div>
-    <input type="button" onclick="$('#ConversationTextDiv').hide();" value="x" />
+    <a  id="ConversationSubject0" onclick="$('.ConversationText').hide();$('#ConversationText0').show(1000);"></a>
+    <div id="ConversationText0" class="ConversationText"></div><br />
+    <a  id="ConversationSubject1" onclick="$('.ConversationText').hide();$('#ConversationText1').show(1000);"></a>
+    <div id="ConversationText1" class="ConversationText"></div><br />
+    <a  id="ConversationSubject2" onclick="$('.ConversationText').hide();$('#ConversationText2').show(1000);"></a>
+    <div id="ConversationText2" class="ConversationText"></div><br />
+    <input type="button" name="btnClose" value="x"  class="btnCloseConversation"  onclick="$('#ConversationTextDiv').hide();"/>
 </div>
 <div id ="menu" class="menu"  >
-      <input type="button" value="?" onclick="$('#HowToPlayDiv').show(1000);" />
+     <input type="button" value="?" onclick="$('#HowToPlayDiv').show(1000);" />
      <input type="button" value="About" onclick="$('#AboutDiv').show(1000);" />
 </div>
 <div id ="debug" class="debug"  >
@@ -117,8 +119,11 @@ loopend;
         $('#DiceDiv').hide();
         $('#ComputerScreenContainerDiv').hide();
         $('#ConversationTextDiv').hide();
+        $('#ConversationText0').hide();
+        $('#ConversationText1').hide();
+        $('#ConversationText2').hide();
 
-        $('#btnRun').click(function () {
+        $('#btnRunCode').click(function () {
             runCode();
         });
 
@@ -234,7 +239,7 @@ loopend;
 
         var getObjectByCoords = function (x, y) {
             for (var i = 0; i < gameData.length; i++) {
-                if (gameData[i].col == x && gameData[i].row == y)
+                if (intersect(gameData[i].col,gameData[i].y,x,y) )
                     return gameData[i];
             }
             return null;
@@ -244,9 +249,7 @@ loopend;
             //Check if its a laptop
             if (intersect(gameData[0].col, gameData[0].row, gameData[1].col, gameData[1].row)) {
                 gameData[0].HasLaptop = true;
-                if (currentDice > maxDice)
-                    maxDice = currentDice;
-                displayMessage = "Pickup Dice D" + currentDice;
+                displayMessage = "Pickup Laptop";
                 gameData[1].visible = false;
             }
         };
@@ -267,7 +270,8 @@ loopend;
                         var newCol = gameData[0].col - playerMoveDistance;
                         if (!CanMove(newCol, gameData[0].row,0))
                             gameData[0].col -= playerMoveDistance;
-                            checkForLaptop();
+                        checkForLaptop();
+                        checkForElevator();
                     }
                     break;
                 case 87://n
@@ -276,7 +280,9 @@ loopend;
                         if (!CanMove(gameData[0].col, newRow,0))
                             gameData[0].row -= playerMoveDistance;
                         checkForLaptop();
-                             }
+                        checkForElevator();
+                    }
+
                     break;
                 case 83://e
                     if (playerSpaceShip.col + playerMoveDistance < levelWidth) {
@@ -288,11 +294,7 @@ loopend;
                                 checkForLaptop();
                             }
                         //check for easterly access to steps
-                        if (intersect(gameData[0].col, gameData[0].row, gameData[2].col, gameData[2].row))
-                            {
-                            var commandObject = { level: gameData };
-                            callServer(null, '@Url.Action("NewLevel","Home")', processSyncData, commandObject);
-                            }
+                        checkForElevator();
                             
                     }
                     break;
@@ -301,7 +303,8 @@ loopend;
                         var newRow = gameData[0].row + playerMoveDistance;
                         if (!CanMove(gameData[0].col, newRow,0))
                             gameData[0].row += playerMoveDistance;
-                            checkForLaptop();
+                        checkForLaptop();
+                        checkForElevator();
                     }
                     break;
                 case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
@@ -311,6 +314,14 @@ loopend;
                     break;
             }
         };
+
+        var checkForElevator = function () {
+            //check for easterly access to steps
+            if (intersect(gameData[0].col, gameData[0].row, gameData[2].col, gameData[2].row)) {
+                var commandObject = { level: gameData };
+                callServer(null, '@Url.Action("NewLevel","Home")', processSyncData, commandObject);
+                        }
+        }
 
         var moveToObject = function (x,y,targetX, targetY,blocked) {
             var moveObject = new Object();
@@ -335,11 +346,11 @@ loopend;
 
         var takeComputerActions = function () {
             for (var i = 1; i < gameData.length; i++) {
-      
+                var tempMoveObject
                 if (gameData[i].canMove && gameLevelData.Lights == true) {
-                    var tempMoveObject = moveToObject(gameData[i].col,gameData[i].row, 
-                                                      gameData[0].col,gameData[0].row,
-                                                      gameData[i].blocked);
+                    tempMoveObject = moveToObject(gameData[i].col, gameData[i].row,
+                                                  gameData[0].col, gameData[0].row,
+                                                  gameData[i].blocked);
 
                     if (!CanMove(tempMoveObject.col, tempMoveObject.row, i)) {
                         gameData[i].row = tempMoveObject.row;
@@ -347,32 +358,37 @@ loopend;
                     }
                     else {
                         //You roll and he rolls
-                        var playerRoll = Math.round(Math.random() * currentDice);
-                        if (playerRoll == currentDice) {
-                            playerRoll += Math.round(Math.random() * currentDice);
-                        }
-                        var monsterRoll = Math.round(Math.random() * 6);
-                        var killMessage, rollMessage;
+                        var t = getObjectByCoords(tempMoveObject.col, tempMoveObject.row);
 
-                        rollMessage = "You rolled a " + playerRoll + " He rolled a " + monsterRoll;
-                        if (playerRoll >= monsterRoll) {
-                            killMessage = " You killed the " + gameData[i].Description;
-                            gameData[i].visible = false;
-                            gameData[i].canMove = false;
-                            //TODO CHANGE THE BOSS KILL GAME OVER STATE
-                            if (gameData[i].Description == "Dragon") {
-                                callServer(null, '@Url.Action("EndGame","Home")', processWinGame, null);                            }
-
+                        if (t != null && t.Description == "Guard" ) {
+                            displayMessage = "attacking guard";
                         }
-                        else {
-                            playerLives = playerLives - 1;
-                            killMessage = " You have lost 1 life," + playerLives + " remaining";
-                        }
+                        else
+                        {
+                            var playerRoll = Math.round(Math.random() * currentDice);
+                            if (playerRoll == currentDice) {
+                                playerRoll += Math.round(Math.random() * currentDice);
+                            }
 
-                        displayMessage = rollMessage + killMessage;
-                            
-                        if (playerLives <=0) {
-                            callServer(null, '@Url.Action("EndGame","Home")', processLooseGame, null); 
+                            var monsterRoll = Math.round(Math.random() * 6);
+                            var killMessage, rollMessage;
+
+                            rollMessage = "You rolled a " + playerRoll + " He rolled a " + monsterRoll;
+                            if (playerRoll >= monsterRoll) {
+                                killMessage = " You killed the " + gameData[i].Description;
+                                gameData[i].visible = false;
+                                gameData[i].canMove = false;
+                            }
+                            else {
+                                playerLives = playerLives - 1;
+                                killMessage = " You have lost 1 life," + playerLives + " remaining";
+                            }
+
+                            displayMessage = rollMessage + killMessage;
+
+                            if (playerLives <= 0) {
+                                callServer(null, '@Url.Action("EndGame","Home")', processLooseGame, null);
+                            }
                         }
                     }
                 }
@@ -414,22 +430,35 @@ loopend;
             var startIndex = (index == 0)?1:0; 
             for(var i=startIndex; i<gameData.length;i++)
             {
-                var obj = gameData[i];
-                if (obj != null && obj .visible && i != index && intersect(obj.col, obj.row, firstX, firstY) && (obj.canMove == true || 
-                    (obj.Description =="Wall" || obj.Description == "Door" ))) {
+                if (IsObject(i,index,"Wall") || IsObject(i,index,"Guard"))
+                {
                     return true;
                 }
+                var obj = gameData[i];
                 if (index == 0 && obj != null && obj.visible && i != index && intersect(obj.col, obj.row, firstX, firstY)
                     && obj.canMove == false && obj.ID == 999) {
-                    $("#ConversationText").text(obj.directionImage[0]);
                     $("#ConversationTextDiv").show();
+                    for (var i = 0; i < 3; i++) {
+                        var subjectArray = obj.directionImage[i].split("-", 2);
+                        $("#ConversationSubject"+ i).text(subjectArray[0]);
+                        $("#ConversationText" + i).text(subjectArray[1]);
+                    }
                     return true;
                 }
             }
-           
-           
             return false;
         };
+
+        var IsObject = function(i,self,objectType) {
+            var obj = gameData[i];
+            var targetObj = gameData[self];
+            if (obj != null && obj.visible && i != self && intersect(obj.col, obj.row, targetObj.col, targetObj.row) && (obj.canMove == true || 
+                (obj.Description ==objectType))) {
+                return true;
+            }
+            return false;
+        }
+
 
         var action = "";
         window.addEventListener('keydown', doKeyDown, true);
@@ -447,10 +476,8 @@ loopend;
                 }
             }
             if (!collision) {
-
                 $("#GameDiv").text("");
             }
-
         });
 
         $("#DiceDiv :input").click(function (e) {

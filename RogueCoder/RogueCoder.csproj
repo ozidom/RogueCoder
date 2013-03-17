@@ -180,7 +180,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.html" />
-    <Content Include="Contact.html" />
     <Content Include="Content\Images\BlackTile.png" />
     <Content Include="Content\Images\BlueTile.png" />
     <Content Include="Content\Images\BlueTileWithDoor.png" />

@@ -39,40 +39,43 @@ namespace RogueCoder.Models
         /// <returns>/// <param name="program">lines of the program</param></returns>
         public string Run(System.Collections.Generic.Dictionary<int, string> program,ref List<ComputerAccessibleObject> gameObjects,out List<string> errors)
         {
-
             errors = new List<string>();
-            List<string> messages = new List<string>();
-            StringBuilder output = new StringBuilder();
-
-            int processCount = 0;
-            int lineNumber = 0;
-            while (lineNumber< program.Count)
+            try
             {
-                if (processCount > 1000)
+                List<string> messages = new List<string>();
+                StringBuilder output = new StringBuilder();
+
+                int processCount = 0;
+                int lineNumber = 0;
+                while (lineNumber < program.Count)
                 {
-                    return "can not exceed 1000 process cycles - this run has been aborted";
+                    if (processCount > 10000)
+                    {
+                        return "can not exceed 10000 process cycles - this run has been aborted";
+                    }
+                    var li = program.FirstOrDefault(k => k.Key == lineNumber);
+                    if (!li.Equals(null) && !String.IsNullOrWhiteSpace(li.Value))
+                    {
+                        string[] lineCommands = li.Value.Split(' ');
+                        lineNumber = li.Key;
+                        string command = lineCommands[0].ToUpper();
+                        List<string> parameters = lineCommands.Skip(1).ToList();
+                        string error;
+                        output.Append(ProcessCommand(ref lineNumber, command, parameters, ref gameObjects, out error));
+                        if (error != string.Empty)
+                            errors.Add(error);
+                    }
+                    processCount++;
+                    lineNumber++;
                 }
-                var li = program.FirstOrDefault(k => k.Key == lineNumber);
-                if (!li.Equals(null) && !String.IsNullOrWhiteSpace(li.Value))
-                {
-                    string[] lineCommands = li.Value.Split(' ');
-                    lineNumber = li.Key;
-                    string command = lineCommands[0].ToUpper();
-                    List<string> parameters = lineCommands.Skip(1).ToList();
-                    string error;
-                    output.Append(ProcessCommand(ref lineNumber, command, parameters,ref gameObjects,out error));
-                    if (error != string.Empty)
-                        errors.Add(error);
-                }
-                else
-                {
-                    errors.Add("Error line number can not be null");
-                }
-                processCount++;
-                lineNumber++;
+
+                return output.ToString();
             }
-           
-            return output.ToString();
+            catch (Exception e)
+            {
+                errors.Add("Runtime error:" + e.Message);
+                return "A runtime error occured :" + e.Message;  
+            }
         }
 
         public string ProcessCommand(ref int line,string command,List<string> parameters,ref List<ComputerAccessibleObject> gameObjects,out string Error )
@@ -86,7 +89,7 @@ namespace RogueCoder.Models
             {
                 case "DISPLAY":
                    
-                    output = parameters[0];
+                    output += parameters[0] + " ";
                     break;
                 case "DISPLAYVAR":
                     //todo check that the variable exists
@@ -186,7 +189,7 @@ namespace RogueCoder.Models
 
                     break;
                 case "HELP":
-                    output = "HELP FOR DOMINICSCRIPT: DISPLAY [TEXT]; DISPLAYVAR [VAR];, -- {COMMENT},VARINT ,VARBOOL [VAR]; " +
+                    output = "HELP FOR DOMINICSCRIPT: DISPLAY [TEXT-NO SPACES]; DISPLAYVAR [VAR];, -- {COMMENT},VARINT ,VARBOOL [VAR]; " +
                         "CONNECT [OBJECT], IFCONNECTDISPLAY [VAR/LOOPCOUNT], LOOP [TIMES TO LOOP], LOOPEND, EXECUTE [OBJECT] [PARAMS] HELP";
                     break;
                 default:

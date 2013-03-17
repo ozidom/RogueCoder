@@ -13,7 +13,7 @@
 
 <div id="dialog" class="IntroGameDiv">
     <div id ="titleDiv"class="titleDiv" >
-        Rogue Coder
+        <h1>Rogue Coder</h1>
     </div>
         <div id="caption">
          @RogueCoder.GameResource.IntroGameText
@@ -23,9 +23,7 @@
             <input type="button" class="startButton" value="Start (Easy)" onclick="$('#dialog').hide(1000);" />
             <input type="button" class="startButton" value="Start (Medium)" onclick="$('#dialog').hide(1000);" />
             <input type="button" class="startButton" value="Start (Hard)" onclick="$('#dialog').hide(1000);" />
-            <a href="~/About.html" >About</a>
-            <a href="~/Contactme.html">Contact</a>
-
+            <a href="~/About.html" >About/Help/Contact</a>
         </div> 
 </div>
 <div id="gameWinScreen" class="GameOverDiv">
@@ -62,30 +60,35 @@
 </div>
 <div id="LaptopDiv" class="DiceDiv">
     <input id="Laptop" type="button" value="Laptop"/>"
-    <input id="Help" type="button" value="Help"/>"
 </div>
 <div id="GameDiv" class="GameDiv" >
 </div>
 <div id="ComputerScreenContainerDiv" class="ComputerScreenContainerDiv"  >
     <textarea id="ComputerScreenDiv" class="ComputerScreenDiv" >
---connect light 123;
---execute light off;
-loop 100;
-ifconnectdisplay light loopcount;
-loopend;
+--Sample loop;
+--loop 10;
+--display hello world;
+--loopend;
+--Sample unlock elevatorlock;
+--connect ElevatorLock 999;
+--execute ElevatorLock off;
 </textarea>
-
     <input type="button"  value="RUN"  id="btnRunCode" class="btnRunCode"  />
-
 </div>
 <div id="ConversationTextDiv" class="ConversationTextDiv">
-    <a  id="ConversationSubject0" onclick="$('.ConversationText').hide();$('#ConversationText0').show(1000);"></a>
-    <div id="ConversationText0" class="ConversationText"></div><br />
-    <a  id="ConversationSubject1" onclick="$('.ConversationText').hide();$('#ConversationText1').show(1000);"></a>
-    <div id="ConversationText1" class="ConversationText"></div><br />
-    <a  id="ConversationSubject2" onclick="$('.ConversationText').hide();$('#ConversationText2').show(1000);"></a>
-    <div id="ConversationText2" class="ConversationText"></div><br />
-    <input type="button" name="btnClose" value="x"  class="btnCloseConversation"  onclick="$('#ConversationTextDiv').hide();"/>
+    <div>
+         <a  id="ConversationSubject0" onclick="$('.ConversationText').hide();$('#ConversationText0').show(1000);"></a>
+         <div id="ConversationText0" class="ConversationText"></div>
+    </div>
+    <div>
+         <a  id="ConversationSubject1" onclick="$('.ConversationText').hide();$('#ConversationText1').show(1000);"></a>
+         <div id="ConversationText1" class="ConversationText"></div>
+    </div>
+    <div>
+        <a  id="ConversationSubject2" onclick="$('.ConversationText').hide();$('#ConversationText2').show(1000);"></a>
+        <div id="ConversationText2" class="ConversationText"></div>
+    </div>
+ 
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -110,6 +113,7 @@ loopend;
         var maxDice = 4;                        //workaround for server probs
         var playerLives;                        //workaround for server probs
         var inConversation = false;
+        var hardness = 0;
 
         $('#AboutDiv').hide();
         $('#HowToPlayDiv').hide();
@@ -260,7 +264,7 @@ loopend;
 
         //KEYBOARD HANDLER
         var getKeyBoardAction = function (evt) {
-            var playerSpaceShip = gameData[0];
+            var player = gameData[0];
             switch (evt.keyCode) {
                 case 70:
                     //f
@@ -268,11 +272,12 @@ loopend;
                 case 71:
                     //g
                     break;
+                case 37:
                 case 65://w
-                    if (playerSpaceShip.col - playerMoveDistance >= 0 )
+                    if (player.col - playerMoveDistance >= 0)
                     {
                         var newCol = gameData[0].col - playerMoveDistance;
-                        if (!blockedMove(newCol, gameData[0].row, 0))  {
+                        if (!blockedMove(newCol, gameData[0].row, 0) && player.col > 0)  {
                             gameData[0].col -= playerMoveDistance;
                             //checkForLaptop();
                             checkForConversation();
@@ -280,10 +285,11 @@ loopend;
                         }
                     }
                     break;
-                case 87://n
-                    if (playerSpaceShip.row - playerMoveDistance >= 0) {
+                case 87:
+                case 38://n
+                    if (player.row - playerMoveDistance >= 0) {
                         var newRow = gameData[0].row - playerMoveDistance;
-                        if (!blockedMove(gameData[0].col, newRow, 0)) {
+                        if (!blockedMove(gameData[0].col, newRow, 0) && player.row > 0) {
                             gameData[0].row -= playerMoveDistance;
                             //checkForLaptop();
                             checkForConversation();
@@ -292,10 +298,11 @@ loopend;
                     }
 
                     break;
-                case 83://e
-                    if (playerSpaceShip.col + playerMoveDistance < levelWidth) {
+                case 83:
+                case 39://e
+                    if (player.col + playerMoveDistance < levelWidth) {
                         var newCol = gameData[0].col + playerMoveDistance;
-                        if (!blockedMove(newCol, gameData[0].row, 0)) {
+                        if (!blockedMove(newCol, gameData[0].row, 0) && player.col < 360) {
                             gameData[0].col += playerMoveDistance;
                             checkForConversation();
                             checkForElevator();
@@ -303,10 +310,11 @@ loopend;
                             
                     }
                     break;
-                case 90://s
-                    if (playerSpaceShip.row + playerMoveDistance < levelWidth - 20) {
+                case 90:
+                case 40://s
+                    if (player.row + playerMoveDistance < levelWidth - 20) {
                         var newRow = gameData[0].row + playerMoveDistance;
-                        if (!blockedMove(gameData[0].col, newRow, 0)) {
+                        if (!blockedMove(gameData[0].col, newRow, 0) && player.row < 460) {
                             gameData[0].row += playerMoveDistance;
                             checkForConversation();
                             checkForElevator();
@@ -378,7 +386,7 @@ loopend;
                                 playerRoll += Math.round(Math.random() * currentDice);
                             }
 
-                            var monsterRoll = Math.round(Math.random() * 6);
+                            var monsterRoll = Math.round(Math.random() * 6 + gameLevelData.CurrentLevel );
                             var killMessage, rollMessage;
 
                             rollMessage = "You rolled a " + playerRoll + " He rolled a " + monsterRoll;
@@ -416,8 +424,6 @@ loopend;
                 
                 $('#GameDiv').text(displayMessage);
                 displayMessage = "";
-
-               
 
                 //Now draw screen
                 drawScreen();
@@ -466,7 +472,11 @@ loopend;
                     }
                 }
             }
+
             $("#ConversationTextDiv").hide();
+            $('#ConversationText0').hide();
+            $('#ConversationText1').hide();
+            $('#ConversationText2').hide();
         }
 
         var IsObject = function(i,self,objectType) {
@@ -507,12 +517,15 @@ loopend;
         $('.startButton').click(function (e) {
             switch (this.value) {
                 case "Start (Easy)":
-                    playerLives = 200;
+                    hardness = 1;
+                    playerLives = 20;
                     break;
                 case "Start (Medium)":
+                    hardness = 2;
                     playerLives = 10;
                     break;
                 case "Start (Hard)":
+                    hardness = 3;
                     playerLives = 5;
                     break;
             }

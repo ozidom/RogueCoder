@@ -247,6 +247,8 @@ input[type="button"] {
     background-color: #000000;
 }
 .ConversationTextDiv {
+   
+
     position: absolute;
     top: 0px;
     left: 400px;
@@ -258,6 +260,10 @@ input[type="button"] {
     z-index: 50;
     background-color: #000000;
 }
+
+    .ConversationTextDiv a {
+         cursor:pointer;
+    }
 .btnCloseConversation {
     position: absolute;
     top: 180px;
@@ -298,8 +304,8 @@ input[type="button"] {
 }
 .btnRunCode {
     position: absolute;
-    top: 170px;
-    left: 530px;
+    top: 400px;
+    left: 400px;
     border: thick solid #008000;
     color: green;
     height: 20px;

@@ -7,8 +7,8 @@ namespace RogueCoder.Models.GameObjects
 {
     public class GameImages
     {
-        public static readonly string ServerLoc = ""; //local
-        //public static readonly string ServerLoc = "/roguecoder";  //server
+        //public static readonly string ServerLoc = ""; //local
+        public static readonly string ServerLoc = "/roguecoder";  //server
 
         public static readonly string BlueTile = ServerLoc + "/Content/Images/BlueTile.png";
         public static readonly string BlackTile = ServerLoc + "/Content/Images/BlackTile.png";
@@ -19,8 +19,8 @@ namespace RogueCoder.Models.GameObjects
         public static readonly string Prisoner = ServerLoc + "/Content/Images/Prisoner.png";
         public static readonly string GreyTile = ServerLoc + "/Content/Images/GreyTile.png";
 
-        public static readonly string LevelOneGuard = ServerLoc + "/Content/Images/BrownMan.png";
-        public static readonly string LevelTwoGuard = ServerLoc + "/Content/Images/SkyBlueMan.png";
+        public static readonly string LevelOneGuard = ServerLoc + "/Content/Images/SkyBlueMan.png";
+        public static readonly string LevelTwoGuard = ServerLoc + "/Content/Images/WhiteMan.png";
         public static readonly string LevelThreeGuard = ServerLoc + "/Content/Images/OrangeMan.png";
         public static readonly string LevelFourGuard = ServerLoc + "/Content/Images/Vampire.png";
         public static readonly string LevelFiveGuard = ServerLoc + "/Content/Images/RedMan.png";

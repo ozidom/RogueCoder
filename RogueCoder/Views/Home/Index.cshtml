@@ -23,6 +23,9 @@
             <input type="button" class="startButton" value="Start (Easy)" onclick="$('#dialog').hide(1000);" />
             <input type="button" class="startButton" value="Start (Medium)" onclick="$('#dialog').hide(1000);" />
             <input type="button" class="startButton" value="Start (Hard)" onclick="$('#dialog').hide(1000);" />
+            <a href="~/About.html" >About</a>
+            <a href="~/Contactme.html">Contact</a>
+
         </div> 
 </div>
 <div id="gameWinScreen" class="GameOverDiv">
@@ -60,9 +63,6 @@
 <div id="LaptopDiv" class="DiceDiv">
     <input id="Laptop" type="button" value="Laptop"/>"
     <input id="Help" type="button" value="Help"/>"
-    <input id="About" type="button" value="About"/>"
-    <input id="Contact Developer" type="button" value="Contact"/>"
-
 </div>
 <div id="GameDiv" class="GameDiv" >
 </div>
@@ -74,7 +74,7 @@ loop 100;
 ifconnectdisplay light loopcount;
 loopend;
 </textarea>
-    <input type="button"  value="x"  id="btnCloseComputer"  class="btnCloseComputer" onclick="$('#ComputerScreenContainerDiv').hide();"/>
+
     <input type="button"  value="RUN"  id="btnRunCode" class="btnRunCode"  />
 
 </div>
@@ -324,9 +324,11 @@ loopend;
         var checkForElevator = function () {
             //check for easterly access to steps
             if (intersect(gameData[0].col, gameData[0].row, gameData[1].col, gameData[1].row)) {
-                var commandObject = { level: gameData };
-                callServer(null, '@Url.Action("NewLevel","Home")', processSyncData, commandObject);
-                        }
+                if (gameLevelData.Elevator == null || gameLevelData.Elevator == true) {
+                    var commandObject = { level: gameData };
+                    callServer(null, '@Url.Action("NewLevel","Home")', processSyncData, commandObject);
+                } 
+             }
         }
 
         var moveToObject = function (x,y,targetX, targetY,blocked) {

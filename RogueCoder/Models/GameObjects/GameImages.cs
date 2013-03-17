@@ -11,6 +11,7 @@ namespace RogueCoder.Models.GameObjects
         //public static readonly string ServerLoc = "/roguecoder";  //server
 
         public static readonly string BlueTile = ServerLoc + "/Content/Images/BlueTile.png";
+        public static readonly string BlackTile = ServerLoc + "/Content/Images/BlackTile.png";
         public static readonly string BlueTileWithDoor = ServerLoc + "/Content/Images/BlueTileWithDoor.png";
         public static readonly string Elevator = ServerLoc + "/Content/Images/Elevator.png";
 

@@ -134,7 +134,7 @@ namespace RogueCoder.Models
 
         public ElevatorLockCAO()
         {
-            name = "Elevator Lock";
+            name = "ElevatorLock";
             state = true;
         }
 

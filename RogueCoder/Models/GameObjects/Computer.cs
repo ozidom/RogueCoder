@@ -39,14 +39,19 @@ namespace RogueCoder.Models
         /// <returns>/// <param name="program">lines of the program</param></returns>
         public string Run(System.Collections.Generic.Dictionary<int, string> program,ref List<ComputerAccessibleObject> gameObjects,out List<string> errors)
         {
+
             errors = new List<string>();
             List<string> messages = new List<string>();
             StringBuilder output = new StringBuilder();
 
-
+            int processCount = 0;
             int lineNumber = 0;
             while (lineNumber< program.Count)
             {
+                if (processCount > 1000)
+                {
+                    return "can not exceed 1000 process cycles - this run has been aborted";
+                }
                 var li = program.FirstOrDefault(k => k.Key == lineNumber);
                 if (!li.Equals(null) && !String.IsNullOrWhiteSpace(li.Value))
                 {
@@ -63,7 +68,7 @@ namespace RogueCoder.Models
                 {
                     errors.Add("Error line number can not be null");
                 }
-
+                processCount++;
                 lineNumber++;
             }
            
@@ -133,7 +138,7 @@ namespace RogueCoder.Models
                     break;
                 case "IFCONNECTDISPLAY":
                     {
-                        if (ConnectCommand(parameters, gameObjects, output) == "Connected")
+                        if (ConnectCommand(parameters, gameObjects, output).ToUpper() == "CONNECTED")
                         {
                             if (parameters[1].ToUpper() == "LOOPCOUNT")
                                 output = loopCount.ToString();
@@ -157,7 +162,7 @@ namespace RogueCoder.Models
                             param = parameters[1];
                         }
 
-                        ComputerAccessibleObject gameObjectFound = gameObjects.FirstOrDefault(g => g.name == gameObject);
+                        ComputerAccessibleObject gameObjectFound = gameObjects.FirstOrDefault(g => g.name.ToUpper() == gameObject.ToUpper());
                         if (gameObjectFound == null)
                         {
                             output = String.Format("No object called  {0} can be found", gameObject);

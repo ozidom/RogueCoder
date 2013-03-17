@@ -179,6 +179,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="About.html" />
+    <Content Include="Contact.html" />
+    <Content Include="Content\Images\BlackTile.png" />
     <Content Include="Content\Images\BlueTile.png" />
     <Content Include="Content\Images\BlueTileWithDoor.png" />
     <Content Include="Content\Images\BrownMan.png" />
@@ -204,6 +207,7 @@
     <Content Include="Content\Images\Untitled.png" />
     <Content Include="Content\Images\Vampire.png" />
     <Content Include="Content\Images\WhiteMan.png" />
+    <Content Include="Contactme.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\discountaspnet.pubxml" />

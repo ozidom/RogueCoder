@@ -67,12 +67,12 @@ namespace RogueCoder.Controllers
             game.Doors = new bool[10];
 
             //Process Elevator
-            ComputerAccessibleObject cao = newCaos.FirstOrDefault(c => c.GetDescription() == "Elevator Lock");
+            ComputerAccessibleObject cao = newCaos.FirstOrDefault(c => c.name == "ElevatorLock");
 
             if (cao != null)
                 game.Elevator = ((ElevatorLockCAO)cao).state;// elock.state;
             else
-                game.Elevator = false;
+                game.Elevator = true;
 
             ComputerAccessibleObject hatchCao = newCaos.FirstOrDefault(c => c.name == "Hatch");
             game.Hatch = hatchCao != null ? ((HatchCAO)hatchCao).state : false;

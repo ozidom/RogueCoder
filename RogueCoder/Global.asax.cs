@@ -15,12 +15,13 @@ namespace RogueCoder
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
+            //Utility.Utility.SendNotificationEmail("Start RogueCoder", "JUst a note to say the app has been started");
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
         }
+
     }
 }

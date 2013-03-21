@@ -25,12 +25,16 @@ namespace RogueCoder.Models
             GetNewLevel();
             Random r = new Random();
             hatchCode = r.Next(500);
+            Utility.Utility.SendNotificationEmail("RogueCoder - Notification - start game", "Just a note to say someones starting game " + DateTime.Now.ToLongDateString());
+        
         }
 
 
         public void GetNewLevel()
         {
             level++;
+            Utility.Utility.SendNotificationEmail("RogueCoder - Notification new level", "Just a note to say someones climbing level onto lv: " + level.ToString() + " on" + DateTime.Now.ToLongDateString());
+         
             Level = null;
             Level = new List<Tile>();
             Lights = true;

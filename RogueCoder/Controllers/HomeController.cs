@@ -97,6 +97,7 @@ namespace RogueCoder.Controllers
         [HttpPost]
         public ActionResult NewLevel(List<Tile> level)
         {
+            string date = DateTime.Now.ToLongDateString();
             Game game = GetGame(level);
             game.GetNewLevel();
             SetGame(game);
